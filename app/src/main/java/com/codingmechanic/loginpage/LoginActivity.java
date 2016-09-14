@@ -1,9 +1,11 @@
 package com.codingmechanic.loginpage;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,15 +13,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+import com.codingmechanic.loginpage.helper.SessionManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
+
+public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = RegisterActivity.class.getSimpleName();
     private EditText userName;
     private EditText passWord;
     private Button login;
     private CheckBox remember;
     private TextView register;
-
-
+    private ProgressDialog pDialog;
+    private SessionManager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,32 +40,72 @@ public class LoginActivity extends AppCompatActivity {
         register = (TextView) findViewById(R.id.txtRegisterNow);
 
         Utility.customView(login, ContextCompat.getColor(this, R.color.register_page));
-//        Utility.customView(login, Color.parseColor(getString(R.string.login_button_color_string)));
+        session = new SessionManager(getApplicationContext());
+
+        // Progress dialog
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+
+//        if(session.isLoggedIn()){
+//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (null != userName.getText() && null != passWord.getText()) {
-                    if (Utility.validatePassword(passWord.getText().toString())) {
 
-                        //TODO: write method to check with database and validate username and password
+                String username = userName.getText().toString().toLowerCase().trim();
+                String pass = passWord.getText().toString().trim();
+                String dataType = "login";
+                if (!username.isEmpty() && !pass.isEmpty()) {
+                    BackgroundWorker bg = new BackgroundWorker(getApplicationContext());
+                    try {
+                        String jsonStr = bg.execute(dataType, username, pass).get();
+                        Log.d(TAG, jsonStr);
+                        JSONObject jObj = new JSONObject(jsonStr);
+                        boolean error = jObj.getBoolean("error");
 
-                        //It is left as true now but, later will be replaced with check from database
-                        if (true) {
-                            Intent intent = new Intent(view.getContext(), MainActivity.class);
+                        // Check for error node in json
+                        if (!error) {
+                            // user successfully logged in
+                            // Create login session
+                            session.setLogin(true);
+
+                            // Now store the user in SQLite
+
+
+                            JSONObject user = jObj.getJSONObject("user");
+                            String uid = user.getString("id");
+                            String name = user.getString("username");
+                            String email = user.getString("email");
+                            String type = user.getString("type");
+
+                            // Inserting row in users table
+                            Log.d(TAG, "user : " + name + "\tEmail : " + email + "\tType : " + type);
+                            // Launch main activity
+                            Intent intent = new Intent(LoginActivity.this,
+                                    MainActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
-
+                            // Error in login. Get the error message
+                            String errorMsg = jObj.getString("error_msg");
+                            Toast.makeText(getApplicationContext(),
+                                    errorMsg, Toast.LENGTH_LONG).show();
                         }
-                    } else {
-                        Toast.makeText(view.getContext(),
-                                "Password must contain 8 char (uppercase, lowercase, special character and a number",
-                                Toast.LENGTH_LONG).show();
+                    } catch (InterruptedException | ExecutionException | JSONException e) {
+                        e.printStackTrace();
                     }
+
                 } else {
-                    Toast.makeText(view.getContext(),
-                            "Must Enter Username or password",
-                            Toast.LENGTH_LONG).show();
+                    // Prompt user to enter credentials
+                    Toast.makeText(getApplicationContext(),
+                            "Please enter the credentials!", Toast.LENGTH_LONG)
+                            .show();
                 }
+
             }
         });
 
@@ -68,5 +117,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
