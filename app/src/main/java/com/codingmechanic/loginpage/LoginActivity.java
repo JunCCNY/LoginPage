@@ -46,11 +46,11 @@ public class LoginActivity extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-//        if(session.isLoggedIn()){
-//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
+        if (session.isLoggedIn()) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,13 +85,12 @@ public class LoginActivity extends AppCompatActivity {
                             // Inserting row in users table
                             Log.d(TAG, "user : " + name + "\tEmail : " + email + "\tType : " + type);
                             // Launch main activity
-                            Intent intent = new Intent(LoginActivity.this,
-                                    MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
                             // Error in login. Get the error message
-                            String errorMsg = jObj.getString("error_msg");
+                            String errorMsg = jObj.getString("error-message");
                             Toast.makeText(getApplicationContext(),
                                     errorMsg, Toast.LENGTH_LONG).show();
                         }
