@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerType);
         final TextView signup = (TextView) findViewById(R.id.txtSigninNow);
 
-        Utility.customView(register, ContextCompat.getColor(this, R.color.login_page));
+        Utility.customView(register, ContextCompat.getColor(this, R.color.color_button));
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -123,6 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

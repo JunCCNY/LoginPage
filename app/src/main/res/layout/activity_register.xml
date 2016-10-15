@@ -7,11 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        xmlns:tools="http://schemas.android.com/tools"
         tools:context="com.codingmechanic.loginpage.RegisterActivity"
         android:background="@color/register_page"
         android:fillViewport="true"
@@ -117,6 +116,6 @@
         android:text="@string/already_registered_sign_in"
         android:id="@+id/txtSigninNow"
         android:gravity="center"
-        android:background="@color/register_page_bottom" />
+        android:background="@color/colorPrimary" />
 
 </LinearLayout>

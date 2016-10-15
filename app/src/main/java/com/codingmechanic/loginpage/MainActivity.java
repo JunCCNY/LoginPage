@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtName;
     private TextView txtEmail;
     private Button btnLogout;
+    private Button listEvent;
 
     private SessionManager session;
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         txtName = (TextView) findViewById(R.id.name);
         txtEmail = (TextView) findViewById(R.id.email);
         btnLogout = (Button) findViewById(R.id.btnLogout);
-
+        listEvent = (Button) findViewById(R.id.btnListEvent);
         // SqLite database handler
 
         // session manager
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 logoutUser();
             }
         });
+
     }
 
     /**

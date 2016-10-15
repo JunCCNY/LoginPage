@@ -93,6 +93,6 @@
         android:text="@string/register_now"
         android:id="@+id/txtRegisterNow"
         android:gravity="center"
-        android:background="@android:color/holo_blue_dark" />
+        android:background="@color/colorPrimary" />
 
 </LinearLayout>

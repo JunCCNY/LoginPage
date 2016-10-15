@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private final String TAG = getClass().getSimpleName();
     private EditText userName;
     private EditText passWord;
     private Button login;
@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView register;
     private ProgressDialog pDialog;
     private SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         remember = (CheckBox) findViewById(R.id.chkRemember);
         register = (TextView) findViewById(R.id.txtRegisterNow);
 
-        Utility.customView(login, ContextCompat.getColor(this, R.color.register_page));
+        Utility.customView(login, ContextCompat.getColor(this, R.color.color_button));
         session = new SessionManager(getApplicationContext());
 
         // Progress dialog
@@ -85,9 +86,12 @@ public class LoginActivity extends AppCompatActivity {
                             // Inserting row in users table
                             Log.d(TAG, "user : " + name + "\tEmail : " + email + "\tType : " + type);
                             // Launch main activity
+
+
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
+
                         } else {
                             // Error in login. Get the error message
                             String errorMsg = jObj.getString("error-message");
@@ -113,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), RegisterActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
