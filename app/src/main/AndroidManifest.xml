@@ -26,7 +26,8 @@
         <activity
             android:name=".MainActivity"
             android:label="Main Activity" />
-        <activity android:name=".UserActivity"></activity>
+        <activity android:name=".UserActivity" />
+        <activity android:name=".getClubs"></activity>
     </application>
 
 </manifest>

@@ -66,31 +66,6 @@
                     android:textAlignment="center"
                     tools:targetApi="jelly_bean_mr1" />
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        style="?android:attr/spinnerStyle"
-                        android:id="@+id/spinnerType"
-                        android:background="@drawable/rounded_edittext"
-                        android:entries="@array/type_arrays"
-                        android:prompt="@string/type_prompt"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:ems="10"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/choose_a_type"
-                        android:gravity="center"
-                        android:background="@drawable/rounded_edittext"
-                        android:id="@+id/txtPlaceHolder" />
-                </RelativeLayout>
 
                 <Button
                     android:background="@drawable/rounded_button"

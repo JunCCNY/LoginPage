@@ -6,10 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,28 +32,11 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText email = (EditText) findViewById(R.id.txtEmailRegister);
         final TextView choose = (TextView) findViewById(R.id.txtPlaceHolder);
         final Button register = (Button) findViewById(R.id.btnRegister);
-        final Spinner spinner = (Spinner) findViewById(R.id.spinnerType);
         final TextView signup = (TextView) findViewById(R.id.txtSigninNow);
 
         Utility.customView(register, ContextCompat.getColor(this, R.color.color_button));
 
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0) {
-                    choose.setAlpha(1);
-                } else {
-                    choose.setAlpha(0);
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,16 +44,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String nameuser = userName.getText().toString().toLowerCase().trim();
                 String emailAddr = email.getText().toString().toLowerCase().trim();
                 String pass = password.getText().toString().trim();
-                String userType = "";
-                if (spinner.getSelectedItemId() != 0) {
-                    userType = spinner.getSelectedItem().toString().trim();
-                }
-
                 String dataType = "register";
-                if (!nameuser.isEmpty() && !emailAddr.isEmpty() && !pass.isEmpty() && !userType.isEmpty()) {
+                if (!nameuser.isEmpty() && !emailAddr.isEmpty() && !pass.isEmpty()) {
                     BackgroundWorker bg = new BackgroundWorker(getApplicationContext());
                     try {
-                        String jsonStr = bg.execute(dataType, nameuser, emailAddr, pass, userType).get();
+                        String jsonStr = bg.execute(dataType, nameuser, emailAddr, pass).get();
                         Log.d(LOG_TAG, jsonStr);
                         JSONObject jObj = new JSONObject(jsonStr);
                         boolean error = jObj.getBoolean("error");
@@ -89,10 +65,9 @@ public class RegisterActivity extends AppCompatActivity {
                             String uid = user.getString("id");
                             String name = user.getString("username");
                             String email = user.getString("email");
-                            String type = user.getString("type");
 
                             // Inserting row in users table
-                            Log.d(LOG_TAG, "user : " + name + "\tEmail : " + email + "\tType : " + type);
+                            Log.d(LOG_TAG, "user : " + name + "\tEmail : " + email);
                             // Launch main activity
                             Intent intent = new Intent(RegisterActivity.this,
                                     LoginActivity.class);

@@ -16,6 +16,9 @@ public class AppConfig {
 
     public static String URL_ADD_CLUB = "http://codingmechanic.com/addclub.php";
 
+    public static String URL_GET_CLUB = "http://codingmechanic.com/get_club.php";
+
+    public static String URL_GET_COLLEGE = "http://codingmechanic.com/get_college.php";
 
 
     //

@@ -32,6 +32,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String loginUrl = AppConfig.URL_LOGIN;
         String registerUrl = AppConfig.URL_REGISTER;
         String addCollege = AppConfig.URL_ADD_COLLEGE;
+        String addClub = AppConfig.URL_ADD_CLUB;
+        String getClub = AppConfig.URL_GET_CLUB;
+        String getCollege = AppConfig.URL_GET_COLLEGE;
+
         if (type.equals("login")) {
             try {
                 String userName = values[1];
@@ -153,7 +157,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String clubEmail = values[4];
                 String clubDesc = values[5];
 
-                URL url = new URL(addCollege);
+                URL url = new URL(addClub);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
