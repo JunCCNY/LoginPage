@@ -15,4 +15,10 @@
         android:layout_height="match_parent"
         android:id="@+id/list" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="submit"
+        android:id="@+id/btnSumbitUser" />
+
 </RelativeLayout>

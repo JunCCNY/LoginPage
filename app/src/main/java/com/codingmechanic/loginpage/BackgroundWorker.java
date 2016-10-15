@@ -36,6 +36,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String getClub = AppConfig.URL_GET_CLUB;
         String getCollege = AppConfig.URL_GET_COLLEGE;
 
+
+        String result = "";
         if (type.equals("login")) {
             try {
                 String userName = values[1];
@@ -57,7 +59,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
-                String result = "";
                 String line = "";
 
                 while ((line = bufferedReader.readLine()) != null) {
@@ -97,7 +98,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
-                String result = "";
                 String line = "";
 
                 while ((line = bufferedReader.readLine()) != null) {
@@ -133,7 +133,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
-                String result = "";
                 String line = "";
 
                 while ((line = bufferedReader.readLine()) != null) {
@@ -177,7 +176,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
-                String result = "";
                 String line = "";
 
                 while ((line = bufferedReader.readLine()) != null) {
@@ -193,8 +191,43 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
 
+        } else if (type.equals("get_club")) {
+            try {
+                String collegeId = values[1];
+                URL url = new URL(getClub);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String postData = URLEncoder.encode("college_id", "UTF-8") + "=" + URLEncoder.encode(collegeId, "UTF-8");
+                bufferedWriter.write(postData);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+                String line = "";
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+
+                httpURLConnection.disconnect();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
-        return null;
+        return result;
     }
 
     @Override

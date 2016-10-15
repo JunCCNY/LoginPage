@@ -30,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText userName = (EditText) findViewById(R.id.txtUserNameRegister);
         final EditText password = (EditText) findViewById(R.id.txtPasswordRegister);
         final EditText email = (EditText) findViewById(R.id.txtEmailRegister);
-        final TextView choose = (TextView) findViewById(R.id.txtPlaceHolder);
         final Button register = (Button) findViewById(R.id.btnRegister);
         final TextView signup = (TextView) findViewById(R.id.txtSigninNow);
 

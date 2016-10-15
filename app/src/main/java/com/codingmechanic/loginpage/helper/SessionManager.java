@@ -24,6 +24,8 @@ public class SessionManager {
 
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
 
+    private static final String JSON_STRING = "JSONString";
+
 
     public SessionManager(Context context) {
         this._context = context;
@@ -41,6 +43,13 @@ public class SessionManager {
         Log.d(TAG, "User login session modified!");
     }
 
+    public void addString(String value) {
+        editor.putString(JSON_STRING, value);
+    }
+
+    public String getJsonString() {
+        return pref.getString(JSON_STRING, null);
+    }
 
     public boolean isLoggedIn() {
         return pref.getBoolean(KEY_IS_LOGGED_IN, false);

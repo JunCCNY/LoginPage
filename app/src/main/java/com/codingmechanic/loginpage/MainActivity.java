@@ -49,7 +49,14 @@ public class MainActivity extends AppCompatActivity {
                 logoutUser();
             }
         });
-
+        listEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, getClubs.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     /**
