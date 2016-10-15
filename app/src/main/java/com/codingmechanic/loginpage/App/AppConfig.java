@@ -20,6 +20,4 @@ public class AppConfig {
 
     public static String URL_GET_COLLEGE = "http://codingmechanic.com/get_college.php";
 
-
-    //
 }
