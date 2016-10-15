@@ -145,6 +145,50 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
 
+        } else if (type.equals("add_club")) {
+            try {
+                String clubName = values[1];
+                String colllgeCode = values[2];
+                String clubType = values[3];
+                String clubEmail = values[4];
+                String clubDesc = values[5];
+
+                URL url = new URL(addCollege);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String postData = URLEncoder.encode("club_name", "UTF-8") + "=" + URLEncoder.encode(clubName, "UTF-8") + "&" +
+                        URLEncoder.encode("college_id", "UTF-8") + "=" + URLEncoder.encode(colllgeCode, "UTF-8") + "&" +
+                        URLEncoder.encode("club_type", "UTF-8") + "=" + URLEncoder.encode(clubType, "UTF-8") + "&" +
+                        URLEncoder.encode("club_email", "UTF-8") + "=" + URLEncoder.encode(clubEmail, "UTF-8") + "&" +
+                        URLEncoder.encode("club_desc", "UTF-8") + "=" + URLEncoder.encode(clubDesc, "UTF-8");
+                bufferedWriter.write(postData);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+                String result = "";
+                String line = "";
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+
+                return result;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
         return null;
     }

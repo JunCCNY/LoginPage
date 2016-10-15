@@ -12,5 +12,11 @@ public class AppConfig {
 
 
     public static String URL_ADD_COLLEGE = "http://codingmechanic.com/addcollege.php";
+
+
+    public static String URL_ADD_CLUB = "http://codingmechanic.com/addclub.php";
+
+
+
     //
 }
